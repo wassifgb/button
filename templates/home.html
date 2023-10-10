@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexnet Scripts Interface</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="modern-title">Flexnet Scripts Interface</h1>
+        
+        <!-- Script Box 1 -->
+        <div class="script-box">
+            <h2>IP Retrieval automation script</h2>
+            <p>Automating the processing of data from an API call, used to add public IP addresses to allow lists, creating two excel files: Remote_networks_date.xslx and mobile_users_date.xlsxl</p>
+            <button onclick="openModal('prismaApiKeyModal1')">Run</button>
+        </div>
+
+        <!-- Script Box 2 -->
+        <div class="script-box">
+            <h2>Subnets Overlap Detection</h2>
+            <p>Click below to enter subnets:</p>
+            <button data-modal="subnetModal2">Run</button>
+        </div>
+
+        <!-- Script Box 3 -->
+        <div class="script-box">
+            <h2>Script N°3</h2>
+            <p>Description of Script N°3 goes here.</p>
+            <button onclick="runScript3()">Run</button>
+        </div>
+
+        <!-- Script Box 4 -->
+        <div class="script-box">
+            <h2>Script N°4</h2>
+            <p>Description of Script N°4 goes here.</p>
+            <button onclick="runScript4()">Run</button>
+        </div>
+
+        <!-- Add more script boxes as needed -->
+
+    </div>
+
+    <!-- Modal for Script 1 -->
+    <div id="prismaApiKeyModal1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('prismaApiKeyModal1')">&times;</span>
+            <h2>Enter Prisma API Key</h2>
+            <form method="post" action="/external/">
+                {% csrf_token %}
+                <label for="param">Input text:</label>
+                <input type="text" id="param" name="param" required>
+                <button type="submit">Run</button>
+            </form>
+            <br>
+            {{ data_external }}<br>
+            {{ data1 }}
+        </div>
+    </div>
+
+    <div id="subnetModal2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('subnetModal2')">&times;</span>
+            <h2>Enter Subnets</h2>
+            <form method="post" action="/subnets/"> <!-- Use the appropriate URL for your Django view -->
+                {% csrf_token %}
+                <label for="subnetInput">Enter subnets separated by comma (e.g., 10.44.0.0/21,10.44.64.0/20):</label>
+                <input type="text" id="subnetInput" name="subnets" placeholder="e.g., 10.44.0.0/21,10.44.64.0/20" required>
+                <button type="submit">Run</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript function for modals -->
+    <script>
+        // Function to open the modal
+        function openModal(modalId) {
+            var modal = document.getElementById(modalId);
+            modal.style.display = 'block';
+        }
+
+        // Function to close the modal
+        function closeModal(modalId) {
+            var modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+        }
+
+        // Attach click event handlers to buttons with data-modal attribute
+        var modalButtons = document.querySelectorAll('[data-modal]');
+        modalButtons.forEach(function(button) {
+            var modalId = button.getAttribute('data-modal');
+            button.addEventListener('click', function() {
+                openModal(modalId);
+            });
+        });
+
+        // You may include your additional script logic here
+        function runScript2() {
+            // Implement Script N°2 logic here
+        }
+
+        function runScript3() {
+            // Implement Script N°3 logic here
+        }
+
+        function runScript4() {
+            // Implement Script N°4 logic here
+        }
+    </script>
+</body>
+</html>
